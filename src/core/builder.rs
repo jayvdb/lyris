@@ -88,8 +88,8 @@ impl<E: Clone + Copy + Debug> Builder<E> {
     }
     
     pub fn build(self) -> (Runtime<E>, Router<E>) {
-        let (update_tx, update_rx) = lockfree::channel::spsc::create();
-        let (event_tx, event_rx) = lockfree::channel::spsc::create();
+        let (update_tx, update_rx) = lock_freedom::channel::spsc::create();
+        let (event_tx, event_rx) = lock_freedom::channel::spsc::create();
         
         let mut components = HashMap::new();
 

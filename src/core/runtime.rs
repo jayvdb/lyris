@@ -15,8 +15,8 @@ pub struct Runtime<E: Clone + Copy + 'static,> {
     pub(crate) execution_order: Vec<StoredComponent<E>>,
     _event_type: PhantomData<E>,
 
-    update_rx: lockfree::channel::spsc::Receiver<Update<E>>,
-    event_rx: lockfree::channel::spsc::Receiver<(E)>,
+    update_rx: lock_freedom::channel::spsc::Receiver<Update<E>>,
+    event_rx: lock_freedom::channel::spsc::Receiver<E>,
 
     // system buffers lookup table
     pub(crate) system_buffers: SystemBuffers,
@@ -29,8 +29,8 @@ pub struct Runtime<E: Clone + Copy + 'static,> {
 
 impl<E: Clone + Copy> Runtime<E> {
     pub(crate) fn new(
-        update_rx: lockfree::channel::spsc::Receiver<Update<E>>,
-        event_rx: lockfree::channel::spsc::Receiver<E>,
+        update_rx: lock_freedom::channel::spsc::Receiver<Update<E>>,
+        event_rx: lock_freedom::channel::spsc::Receiver<E>,
         states: Vec<Box<UnsafeCell<dyn Any + Send + 'static>>>,
         buffer_size: usize,
     ) -> Self {

@@ -5,7 +5,7 @@ use std::collections::HashSet;
 use std::cell::UnsafeCell;
 use std::fmt::Debug;
 use crate::Runtime;
-use lockfree::channel::spsc::{Sender, Receiver};
+use lock_freedom::channel::spsc::{Sender, Receiver};
 use super::router::{RoutingErr, PortHandle};
 use super::processor::{Port, PortType, SystemInput, SystemOutput, input, output};
 
@@ -583,8 +583,8 @@ pub(crate) struct Clerk<E: Clone + Copy + 'static> {
 
     ledger: Ledger<E>,
     // Channels for updates
-    update_tx: lockfree::channel::spsc::Sender<Update<E>>,
-    event_tx: lockfree::channel::spsc::Sender<(E)>,
+    update_tx: lock_freedom::channel::spsc::Sender<Update<E>>,
+    event_tx: lock_freedom::channel::spsc::Sender<E>,
 }
 
 impl<E: Clone + Copy + Debug + 'static> Clerk<E> {
